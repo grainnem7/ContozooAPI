@@ -13,6 +13,10 @@ namespace ContozooAPI.Repositories
     {
         private readonly animalsContext _dbContext;
 
+        public ContozooRepository()
+        {
+        }
+
         public ContozooRepository(animalsContext dbContext) 
         {
             _dbContext = Guard.Against.Null(dbContext, nameof(dbContext));        

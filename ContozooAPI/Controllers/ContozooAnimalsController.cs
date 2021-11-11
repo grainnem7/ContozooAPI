@@ -18,6 +18,7 @@ namespace ContozooAPI.Controllers
         //remove _context
         private readonly animalsContext _context;
         private readonly IContozooRepository _repository;
+        private IContozooRepository service;
 
         public ContozooAnimalsController(animalsContext context, IContozooRepository repository)
         {
@@ -25,12 +26,22 @@ namespace ContozooAPI.Controllers
             _repository = Guard.Against.Null(repository, nameof(repository));
         }
 
+        public object GetAnimals()
+        {
+            throw new NotImplementedException();
+        }
+
+        //public ContozooAnimalsController(IContozooRepository service)
+        //{
+        //    this.service = service;
+        //}
+
         // GET: api/ContozooAnimals
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContozooAnimal>>> GetContozooAnimals()
         {
-            var result = await _repository.GetAnimals();
-            return Ok(result);
+            var items = await _repository.GetAnimals();
+            return Ok(items);
             
         }
 
