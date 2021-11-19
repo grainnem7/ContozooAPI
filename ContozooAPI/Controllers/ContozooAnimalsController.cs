@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ContozooAPI.Model;
 using ContozooAPI.Interfaces;
 using Ardalis.GuardClauses;
@@ -33,7 +29,7 @@ namespace ContozooAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContozooAnimal>>> GetContozooAnimals()
         {
-            var items = await _repository.GetAnimals();
+            var items = await _repository.GetAnimalsAsync();
             return Ok(items);
             
         }
