@@ -4,7 +4,6 @@ using ContozooAPI.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ContozooAPI.Repositories
@@ -27,7 +26,7 @@ namespace ContozooAPI.Repositories
             return  await _dbContext.ContozooAnimals.FindAsync(id);
         }
 
-        public async Task<IEnumerable<ContozooAnimal>> GetAnimals()
+        public async Task<IEnumerable<ContozooAnimal>> GetAnimalsAsync()
         {
             return await _dbContext.ContozooAnimals.ToListAsync();
         }

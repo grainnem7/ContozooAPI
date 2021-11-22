@@ -2,12 +2,9 @@ using ContozooAPI.Controllers;
 using ContozooAPI.Data;
 using ContozooAPI.Interfaces;
 using ContozooAPI.Model;
-using ContozooAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,9 +12,6 @@ namespace ContozooAnimals.Test
 {
     public class ContozooAnimalsControllerTest
     {
-        ContozooAnimalsController _controller;
-        IContozooRepository _service;
-
         //public ContozooAnimalsControllerTest()
         //{
         //    _service = new ContozooRepository();
@@ -25,11 +19,11 @@ namespace ContozooAnimals.Test
         //}
 
         [Fact]
-        public static void IndexUnitTest()
+        public static void GetTestAnimalsUnitTest()
         {
             //arrange
             var mockRepo = new Mock<IContozooRepository>();
-            mockRepo.Setup(n => n.GetAnimals()).Returns(MockData.GetTestAnimals());
+            mockRepo.Setup(n => n.GetAnimalsAsync()).Returns(MockData.GetTestAnimals());
             var controller = new ContozooAnimalsController(mockRepo.Object);
 
             //act
@@ -37,8 +31,11 @@ namespace ContozooAnimals.Test
 
             //assert
             var actionResult = Assert.IsType<Task<ActionResult<IEnumerable<ContozooAnimal>>>>(result);
-            var actionResultAnimals = Assert.IsAssignableFrom<Task<List<ContozooAnimal>>>(actionResult.Result.Value);
-            Assert.Equal(2, actionResultAnimals.Result.Count);
+            var okObjectResult = Assert.IsAssignableFrom<OkObjectResult>(actionResult.Result.Result);
+            var animals = (List<ContozooAnimal>)okObjectResult.Value;
+            Assert.Equal(2, animals.Count);
+            Assert.Equal("Shark", animals[0].Animal);
+            Assert.Equal("Flamingo", animals[1].Animal);
         }
 
         //[Fact]
